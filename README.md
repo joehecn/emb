@@ -1,3 +1,4 @@
+
 # emb
 bigproject monitor
 
@@ -10,4 +11,7 @@ bigproject monitor
 - [x] 性能测试
 
 #### v1.0.0
-- [x] 版本更新
+- [x] 强制版本更新
+
+#### v1.0.1
+- [x] add topic
