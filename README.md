@@ -18,3 +18,6 @@ bigproject monitor
 
 #### v1.0.2
 - [x] dataZoom
+
+#### v1.0.3
+- [x] copyright
