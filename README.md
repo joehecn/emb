@@ -15,3 +15,6 @@ bigproject monitor
 
 #### v1.0.1
 - [x] add topic
+
+#### v1.0.2
+- [x] dataZoom
