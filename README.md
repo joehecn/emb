@@ -24,3 +24,6 @@ bigproject monitor
 
 #### v1.0.4
 - [x] export image and excel
+
+#### v1.0.5
+- [x] save dialog
