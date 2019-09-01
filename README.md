@@ -21,3 +21,6 @@ bigproject monitor
 
 #### v1.0.3
 - [x] copyright
+
+#### v1.0.4
+- [x] export image and excel
