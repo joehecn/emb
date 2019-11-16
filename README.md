@@ -27,3 +27,6 @@ bigproject monitor
 
 #### v1.0.5
 - [x] save dialog
+
+#### v1.0.6
+- [x] report excel
