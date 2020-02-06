@@ -34,3 +34,16 @@ bigproject monitor
 
 [david-image]: http://img.shields.io/david/joehecn/emb.svg?style=flat-square
 [david-url]: https://david-dm.org/joehecn/emb
+
+###
+https://www.electronjs.org/docs/tutorial/installation
+
+打包失败时手动下载依赖
+缓存文件夹:
+/Users/hemiao/Library/Caches/electron
+/Users/hemiao/Library/Caches/electron-builder
+
+# grpc
+https://www.npmjs.com/package/grpc
+npm rebuild --target=12.14.1 --runtime=electron --dist-url=https://atom.io/download/electron
+npm rebuild --build-from-source=mega-proto --target=12.14.1 --runtime=electron --dist-url=https://atom.io/download/electron

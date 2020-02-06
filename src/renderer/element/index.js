@@ -14,6 +14,8 @@ import {
   Container,
   DatePicker,
   Footer,
+  Form,
+  FormItem,
   Header,
   Icon,
   InfiniteScroll,
@@ -33,6 +35,9 @@ import {
   Select,
   Step,
   Steps,
+  Switch,
+  Tabs,
+  TabPane,
   Table,
   TableColumn,
   Transfer
@@ -48,6 +53,8 @@ Vue.component(Col.name, Col)
 Vue.component(Container.name, Container)
 Vue.component(DatePicker.name, DatePicker)
 Vue.component(Footer.name, Footer)
+Vue.component(Form.name, Form)
+Vue.component(FormItem.name, FormItem)
 Vue.component(Header.name, Header)
 Vue.component(Icon.name, Icon)
 Vue.use(InfiniteScroll)
@@ -65,6 +72,9 @@ Vue.component(Row.name, Row)
 Vue.component(Select.name, Select)
 Vue.component(Step.name, Step)
 Vue.component(Steps.name, Steps)
+Vue.component(Switch.name, Switch)
+Vue.component(Tabs.name, Tabs)
+Vue.component(TabPane.name, TabPane)
 Vue.component(Table.name, Table)
 Vue.component(TableColumn.name, TableColumn)
 Vue.component(Transfer.name, Transfer)

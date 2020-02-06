@@ -40,6 +40,48 @@ const methods = {
     msg.body = data
   },
 
+  async tablelist (msg, _) {
+    const { req } = msg
+    const data = await api.sTablelist(req)
+    msg.body = data
+  },
+
+  async headerlist (msg, _) {
+    const { req } = msg
+    const data = await api.sHeaderlist(req)
+    msg.body = data
+  },
+
+  async dbConfigList (msg, _) {
+    console.log({ msg })
+    const { req } = msg
+    const data = await api.sDbConfigList(req)
+    msg.body = data
+  },
+
+  async dbConfigAdd (msg, _) {
+    console.log('---- dbConfigAdd')
+    console.log({ msg })
+    const { req } = msg
+    const data = await api.sDbConfigAdd(req)
+    console.log({ data })
+    msg.body = data
+  },
+
+  async dbConfigUpdate (msg, _) {
+    console.log({ msg })
+    const { req } = msg
+    const data = await api.sDbConfigUpdate(req)
+    msg.body = data
+  },
+
+  async dbConfigRemove (msg, _) {
+    console.log({ msg })
+    const { req } = msg
+    const data = await api.sDbConfigRemove(req)
+    msg.body = data
+  },
+
   createRetainClient (msg, win) {
     retainClient.getRetainClient(msg.req.where, win)
 
@@ -142,16 +184,15 @@ const methods = {
 }
 const ctrlMsg = async (msg, win) => {
   try {
-    console.log({ msg })
     await methods[msg.key](msg, win)
   } catch (error) {
     if (error.isAxiosError && error.response && error.response.data) {
       msg.body = error.response.data
     } else {
-      console.log('--------------- ctrlMsg error')
-      console.log(error)
-      console.log(msg)
-      msg.body = { code: 1000001, message: 'unknown error' }
+      console.error(error)
+      const code = error.code || 1000001
+      const message = error.message || 'unknown error'
+      msg.body = { code, message }
     }
   }
 }

@@ -22,11 +22,19 @@ const store = new Vuex.Store({
     testloading: false,
     testMsgs: [],
     topic: '',
+    organize: '',
     organizes: [],
     datasources: [],
     devicepointObj: {},
     tznames: [],
-    reportexcels: []
+    reportexcels: [],
+    tables: [],
+    headers: [],
+    resHeaderNames: [],
+    resTables: [],
+    delayedJobs: [],
+    jobCounts: {},
+    dbConfigList: []
   },
   mutations: {
     setGithub (state, github) {
@@ -77,6 +85,9 @@ const store = new Vuex.Store({
     setTopic (state, topic) {
       state.topic = topic
     },
+    setOrganize (state, organize) {
+      state.organize = organize
+    },
     setOrganizes (state, organizes) {
       state.organizes = organizes
     },
@@ -91,6 +102,61 @@ const store = new Vuex.Store({
     },
     setReportexcels (state, reportexcels) {
       state.reportexcels = reportexcels
+    },
+    setTables (state, tables) {
+      state.tables = tables
+    },
+    initHeaders (state, len) {
+      state.headers = (new Array(len)).fill([])
+      state.resHeaderNames = (new Array(len)).fill([])
+      state.resTables = (new Array(len)).fill([])
+      // }
+    },
+    setHeaders (state, { data, index, mark }) {
+      const { headerArr, resHeaderName, resTable } = data
+
+      const newHeader = headerArr.map(({ inField, inType }) => {
+        let outField = inField
+        let outType = ''
+        let unit = ' '
+        
+        if (mark[inField]) {
+          if (mark[inField].outField) outField = mark[inField].outField
+          if (mark[inField].outType) outType = mark[inField].outType
+          if (mark[inField].unit) unit = mark[inField].unit
+        }
+
+        return {
+          inField,
+          inType,
+          outField,
+          outType,
+          unit
+        }
+      })
+      state.headers.splice(index, 1, newHeader)
+
+      state.resHeaderNames.splice(index, 1, resHeaderName)
+      state.resTables.splice(index, 1, resTable)
+    },
+    updateHeaders (state, { value, index, rowIndex, field }) {
+      const newHeader = state.headers[index]
+      newHeader[rowIndex][field] = value
+      state.headers.splice(index, 1, newHeader)
+    },
+    setDbConfig(state, { delayedJobs, jobCounts, list }) {
+      state.delayedJobs = delayedJobs
+      state.jobCounts = jobCounts
+      state.dbConfigList = list
+    },
+    removeDbConfigListItem(state, _id) {
+      for (let i = 0, len = state.dbConfigList.length; i < len; i++) {
+        const item = state.dbConfigList[i]
+        if (item._id === _id) {
+          state.dbConfigList.splice(i, 1)
+          return
+        }
+      }
     }
   },
   actions: {
@@ -130,6 +196,9 @@ const store = new Vuex.Store({
     setTopic ({ commit }, topic) {
       commit('setTopic', topic)
     },
+    setOrganize({ commit }, organize) {
+      commit('setOrganize', organize)
+    },
     setOrganizes({ commit }, organizes) {
       commit('setOrganizes', organizes)
     },
@@ -144,6 +213,24 @@ const store = new Vuex.Store({
     },
     setReportexcels ({ commit }, reportexcels) {
       commit('setReportexcels', reportexcels)
+    },
+    setTables ({ commit }, tables) {
+      commit('setTables', tables)
+    },
+    initHeaders ({ commit }, len) {
+      commit('initHeaders', len)
+    },
+    setHeaders ({ commit }, obj) {
+      commit('setHeaders', obj)
+    },
+    updateHeaders ({ commit }, obj) {
+      commit('updateHeaders', obj)
+    },
+    setDbConfig ({ commit }, data) {
+      commit('setDbConfig', data)
+    },
+    removeDbConfigListItem({ commit }, _id) {
+      commit('removeDbConfigListItem', _id)
     }
   },
   getters: {
@@ -173,23 +260,6 @@ const store = new Vuex.Store({
           label: _arr.join('\n')
         })
       }
-
-      // const arr = state.datasources.map(({ devicePoint, name }) => {
-      //   let arr = []
-
-      //   if (devicePoint && devicePoint.length === 2) {
-      //     const [device, point] = devicePoint
-      //     if (devicepointObj[device] && devicepointObj[device][point]) {
-      //       const [dname, pname] = devicepointObj[device][point]
-      //       arr = [name, dname, pname]
-      //     }
-      //   }
-
-      //   return {
-      //     key: name,
-      //     label: arr.join('\n')
-      //   }
-      // })
 
       return { arr, obj }
     }

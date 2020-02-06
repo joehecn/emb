@@ -75,7 +75,7 @@ const createMainWindow = () => {
   let win = new BrowserWindow({
     width: 800,
     height: 700,
-    // fullscreen: true,
+    fullscreen: true,
     webPreferences: {
       nodeIntegration: true
     }
@@ -138,11 +138,15 @@ ipcMain.on('renderer-msg', async (event, msg) => {
   event.reply('main-msg', msg)
 })
 
+ipcMain.on('promise-msg', async (event, msg) => {
+  await ctrlMsg(msg, mainWindow)
+  event.reply(msg.eventName, msg)
+})
+
 ipcMain.on('show-save-dialog', (event, { type, defaultPath }) => {
   dialog.showSaveDialog(mainWindow, {
     defaultPath
   }).then(res => {
-    console.log(res)
     if (res && !res.canceled) {
       event.reply('selected-file', { type, filePath: res.filePath })
     }

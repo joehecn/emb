@@ -97,7 +97,7 @@ const methods = {
     const { code, data } = body
 
     if (code === 0) {
-      console.log(data)
+      // console.log(data)
       const obj = store.getters.transferDatasourceNames.obj
 
       const _data = data.map(({ name, time, original, value }) => {
@@ -111,8 +111,73 @@ const methods = {
         time = moment(time).format('YYYY-MM-DD HH:mm')
         return { name, dname, pname, time, original, value }
       })
-      console.log(_data)
+      // console.log(_data)
       store.dispatch('setReportexcels', _data)
+    }
+  },
+
+  tablelist ({ body }) {
+    const { code, data, message } = body
+    if (code === 0) {
+      store.dispatch('setTables', data)
+      Notification.success({
+        title: 'success',
+        message: 'connect ok'
+      })
+    } else {
+      Notification.error({
+        title: code || 'DB ERROR',
+        message: message || 'UNKNOWN ERROR'
+      })
+      store.dispatch('setTables', [])
+    }
+  },
+
+  headerlist({ body }) {
+    const { code, data, index, mark } = body
+
+    if (code === 0) {
+      store.dispatch('setHeaders', { data, index: Number(index), mark })
+    }
+  },
+
+  dbConfigList({ body }) {
+    const { code, data } = body
+
+    if (code === 0) {
+      console.log({ data })
+      // delayedJobs, jobCounts, list
+      store.dispatch('setDbConfig', data)
+    }
+  },
+
+  dbConfigAdd({ body }) {
+    const { code, message, data } = body
+
+    if (code === 0) {
+      console.log({ data })
+    } else {
+      Notification.error({
+        position: 'bottom-left',
+        title: code,
+        message
+      })
+    }
+  },
+
+  dbConfigUpdate({ body }) {
+    const { code, data } = body
+
+    if (code === 0) {
+      console.log({ data })
+    }
+  },
+
+  dbConfigRemove({ body }) {
+    const { code, data } = body
+
+    if (code === 0) {
+      console.log({ data })
     }
   },
 
@@ -162,7 +227,7 @@ const methods = {
   },
 
   runTesting ({ body, req }) {
-    console.log('------- ctrlMsg runTesting', { body, req })
+    // console.log('------- ctrlMsg runTesting', { body, req })
 
     store.dispatch('setTestloading', false)
   },
@@ -172,7 +237,7 @@ const methods = {
   },
 
   saveExcel({ type, filePath }) {
-    console.log({ type, filePath })
+    // console.log({ type, filePath })
     // [{
     //   back: 1567336698840
     //   clientIndex: 6

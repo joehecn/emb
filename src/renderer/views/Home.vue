@@ -1,12 +1,29 @@
 
-
-
 <template>
   <div id="home">
     <p>{{ user.name }} - {{ user.isSuper ? 'super' : 'user' }}</p>
     <h1 class="title">{{ name }}</h1>
 
     <el-row :gutter="12">
+      <el-col
+        v-if="user.isSuper"
+        :span="12">
+        <div class="card-wrap">
+          <el-card shadow="hover">
+            <div slot="header" class="clearfix">
+              <span>Import list</span>
+              <el-button
+                style="float: right; padding: 3px 0"
+                type="text"
+                @click="goto('importList')">
+                see more...
+              </el-button>
+            </div>
+            Database Import list
+          </el-card>
+        </div>
+      </el-col>
+
       <el-col
         v-if="user.isSuper"
         :span="12">
@@ -100,7 +117,7 @@ export default {
   },
   methods: {
     goto(where) {
-      if (where === 'testing' || where === 'report') {
+      if (['testing', 'report', 'importList'].includes(where)) { // === 'testing' || where === 'report') {
         this.$router.push(`/${where}`)
       } else {
         this.$router.push(`/retain/${where}`)

@@ -38,7 +38,20 @@ const routes = [
   {
     path: '/report',
     name: 'report',
-    component: () => import('../views/Report.vue')
+    component: () => import('../views/Report.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/importList',
+    name: 'importList',
+    component: () => import('../views/ImportList.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/import/:organize/:id',
+    name: 'import',
+    component: () => import('../views/Import.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 

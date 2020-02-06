@@ -8,35 +8,6 @@
       <el-step title="Step 5"></el-step>
     </el-steps>
 
-    <div id="step-btn-wrap">
-      <el-button size="mini" @click="resetStep">Back to step1</el-button>
-      <el-button
-        v-if="active === 4 && reportexcels.length > 0"
-        type="success"
-        size="mini"
-        @click="downloadExcel">
-        Download to excel
-      </el-button>
-      <el-button-group>
-        <el-button
-          size="mini"
-          type="primary"
-          icon="el-icon-arrow-left"
-          @click="preStep"
-          :disabled="active < 1"
-        >上一步</el-button>
-        <el-button
-          size="mini"
-          type="primary"
-          @click="nextStep"
-          :disabled="active > 3"
-        >
-          下一步
-          <i class="el-icon-arrow-right el-icon--right"></i>
-        </el-button>
-      </el-button-group>
-    </div>
-
     <div id="search-wrap">
       <div id="select-organize-wrap"
         v-show="active === 0">
@@ -166,6 +137,35 @@
         </el-table>
       </div>
     </div>
+
+    <div id="step-btn-wrap">
+      <el-button size="mini" @click="resetStep">Back to step1</el-button>
+      <el-button
+        :disabled="reportDisabled"
+        type="success"
+        size="mini"
+        @click="downloadExcel">
+        Download to excel
+      </el-button>
+      <el-button-group>
+        <el-button
+          size="mini"
+          type="primary"
+          icon="el-icon-arrow-left"
+          @click="preStep"
+          :disabled="active < 1"
+        >上一步</el-button>
+        <el-button
+          size="mini"
+          type="primary"
+          @click="nextStep"
+          :disabled="active > 3"
+        >
+          下一步
+          <i class="el-icon-arrow-right el-icon--right"></i>
+        </el-button>
+      </el-button-group>
+    </div>
   </div>
 </template>
 
@@ -194,7 +194,10 @@ export default {
     }),
     ...mapGetters({
       devicepoints: 'transferDatasourceNames'
-    })
+    }),
+    reportDisabled () {
+      return !(this.active === 4 && this.reportexcels.length > 0)
+    }
   },
   watch: {
     organize (newVal) {
@@ -359,6 +362,7 @@ export default {
   padding: 16px;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 #step-btn-wrap {

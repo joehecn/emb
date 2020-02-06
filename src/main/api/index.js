@@ -1,6 +1,7 @@
 
 import request from 'axios'
 import config from '../config/index.js'
+import mySql from '../mysql/index.js'
 
 const {
   API_BASC_URL
@@ -85,6 +86,94 @@ const api = {
       }
     })
 
+    return res.data
+  },
+
+  async sTablelist({ connForm }) {
+    // console.log(connForm)
+    const { host, port, user, password, database } = connForm
+    // try {
+    const data = await mySql.findTables({ host, port, user, password, database })
+    return { code: 0, data }
+    // } catch (error) {
+    //   return error
+    // }
+  },
+
+  async sHeaderlist({ connForm, table, index, mark }) {
+    // console.log(connForm)
+    const { host, port, user, password, database } = connForm
+    const conn = { host, port, user, password, database }
+    // try {
+    const headerArr = await mySql.findHeaders(conn, table)
+    const { results: resTable, fields } = await mySql.find(conn, `SELECT * FROM ${table} LIMIT 1`)
+
+    const resHeaderName = fields.map(item => item.name)
+    // console.log(resHeaderName, resTable)
+
+    return { code: 0, data: { headerArr, resHeaderName, resTable }, index, mark }
+    // } catch (error) {
+    //   return error
+    // }
+  },
+
+  async sDbConfigList({ token, db }) {
+    const url = `${API_BASC_URL}/super/grpc/list`
+
+    const res = await request.get(url, {
+      headers: {
+        Authorization: token,
+        db
+      }
+    })
+
+    console.log(JSON.stringify(res.data, null, 2))
+    return res.data
+  },
+
+  async sDbConfigAdd({ token, db, arg }) {
+    // try {
+    const url = `${API_BASC_URL}/super/grpc/add`
+
+    const res = await request.post(url, arg, {
+      headers: {
+        Authorization: token,
+        db
+      }
+    })
+
+    console.log(JSON.stringify(res.data, null, 2))
+    return res.data
+    // } catch (error) {
+    //   console.log(error)
+    // }
+  },
+
+  async sDbConfigUpdate({ token, db, arg }) {
+    const url = `${API_BASC_URL}/super/grpc/update`
+
+    const res = await request.post(url, arg, {
+      headers: {
+        Authorization: token,
+        db
+      }
+    })
+
+    console.log(JSON.stringify(res.data, null, 2))
+    return res.data
+  },
+
+  async sDbConfigRemove({ token, db, arg }) {
+    const url = `${API_BASC_URL}/super/grpc/remove`
+
+    const res = await request.post(url, arg, {
+      headers: {
+        Authorization: token,
+        db
+      }
+    })
+
+    console.log(JSON.stringify(res.data, null, 2))
     return res.data
   }
 }

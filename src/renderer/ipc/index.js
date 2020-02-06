@@ -33,6 +33,22 @@ const ipc = {
     ipcRenderer.send('renderer-msg', msg)
   },
 
+  sendPromise(msg) {
+    return new Promise(resolve => {
+      const { key } = msg
+      const time = Date.now()
+      const eventName = `${key}-${time}`
+
+      msg.eventName = eventName
+
+      ipcRenderer.once(eventName, (_, msg) => {
+        resolve(msg)
+      })
+
+      ipcRenderer.send('promise-msg', msg)
+    })
+  },
+
   showSaveDialog(option) {
     ipcRenderer.send('show-save-dialog', option)
   }

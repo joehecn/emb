@@ -46,6 +46,8 @@ import HeaderRetain from './components/HeaderRetain.vue'
 import HeaderTesting from './components/HeaderTesting.vue'
 import HeaderGithub from './components/HeaderGithub.vue'
 import HeaderReport from './components/HeaderReport.vue'
+import HeaderImportList from './components/HeaderImportList.vue'
+import HeaderImport from './components/HeaderImport.vue'
 
 import FooterLogin from './components/FooterLogin.vue'
 import FooterHome from './components/FooterHome.vue'
@@ -53,6 +55,8 @@ import FooterRetain from './components/FooterRetain.vue'
 import FooterTesting from './components/FooterTesting.vue'
 import FooterGithub from './components/FooterGithub.vue'
 import FooterReport from './components/FooterReport.vue'
+import FooterImportList from './components/FooterImportList.vue'
+import FooterImport from './components/FooterImport.vue'
 
 export default {
   components: {
@@ -62,12 +66,17 @@ export default {
     'header-testing': HeaderTesting,
     'header-github': HeaderGithub,
     'header-report': HeaderReport,
+    'header-importList': HeaderImportList,
+    'header-import': HeaderImport,
+
     'footer-login': FooterLogin,
     'footer-home': FooterHome,
     'footer-retain': FooterRetain,
     'footer-testing': FooterTesting,
     'footer-github': FooterGithub,
-    'footer-report': FooterReport
+    'footer-report': FooterReport,
+    'footer-importList': FooterImportList,
+    'footer-import': FooterImport
   },
   computed: {
     headerComponent () {

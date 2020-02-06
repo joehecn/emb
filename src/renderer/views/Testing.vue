@@ -124,7 +124,7 @@ export default {
       // TODO: 改进算法
       if (this.testMsgs.length === this.requests) {
         // 保证数据和视图一致
-        console.log('--- latest refresh view')
+        // console.log('--- latest refresh view')
         this.state = 'State: Ready'
         this.refreshView()
       } else {
@@ -135,7 +135,7 @@ export default {
   },
   mounted() {
     this._throttle = throttle(() => {
-      console.log('--- throttle refresh view')
+      // console.log('--- throttle refresh view')
       this.refreshView()
     }, 1000)
 
