@@ -53,44 +53,44 @@ const methods = {
   // },
 
   async findTables (msg, _) {
-    console.log({ msg })
+    // console.log({ msg })
     const { req } = msg
     const data = await api.sFindTables(req)
     msg.body = data
   },
 
   async findHeaders (msg, _) {
-    console.log({ msg })
+    // console.log({ msg })
     const { req } = msg
     const data = await api.sFindHeaders(req)
     msg.body = data
   },
 
   async dbConfigList (msg, _) {
-    console.log({ msg })
+    // console.log({ msg })
     const { req } = msg
     const data = await api.sDbConfigList(req)
     msg.body = data
   },
 
   async dbConfigAdd (msg, _) {
-    console.log('---- dbConfigAdd')
-    console.log({ msg })
+    // console.log('---- dbConfigAdd')
+    // console.log({ msg })
     const { req } = msg
     const data = await api.sDbConfigAdd(req)
-    console.log({ data })
+    // console.log({ data })
     msg.body = data
   },
 
   async dbConfigUpdate (msg, _) {
-    console.log({ msg })
+    // console.log({ msg })
     const { req } = msg
     const data = await api.sDbConfigUpdate(req)
     msg.body = data
   },
 
   async dbConfigRemove (msg, _) {
-    console.log({ msg })
+    // console.log({ msg })
     const { req } = msg
     const data = await api.sDbConfigRemove(req)
     msg.body = data
@@ -157,7 +157,7 @@ const methods = {
           win.webContents.send('main-send-test-mqtt', { item })
         }
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
 
     }

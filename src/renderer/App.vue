@@ -48,6 +48,7 @@ import HeaderGithub from './components/HeaderGithub.vue'
 import HeaderReport from './components/HeaderReport.vue'
 import HeaderImportList from './components/HeaderImportList.vue'
 import HeaderImport from './components/HeaderImport.vue'
+import HeaderTaskList from './components/HeaderTaskList.vue'
 
 import FooterLogin from './components/FooterLogin.vue'
 import FooterHome from './components/FooterHome.vue'
@@ -57,6 +58,7 @@ import FooterGithub from './components/FooterGithub.vue'
 import FooterReport from './components/FooterReport.vue'
 import FooterImportList from './components/FooterImportList.vue'
 import FooterImport from './components/FooterImport.vue'
+import FooterTaskList from './components/FooterTaskList.vue'
 
 export default {
   components: {
@@ -68,6 +70,7 @@ export default {
     'header-report': HeaderReport,
     'header-importList': HeaderImportList,
     'header-import': HeaderImport,
+    'header-tasklist': HeaderTaskList,
 
     'footer-login': FooterLogin,
     'footer-home': FooterHome,
@@ -76,15 +79,18 @@ export default {
     'footer-github': FooterGithub,
     'footer-report': FooterReport,
     'footer-importList': FooterImportList,
-    'footer-import': FooterImport
+    'footer-import': FooterImport,
+    'footer-tasklist': FooterTaskList
   },
   computed: {
     headerComponent () {
       const name = this.$route.name || 'login'
+      // console.log({ name })
       return `header-${name}`
     },
     footerComponent () {
       const name = this.$route.name || 'login'
+      // console.log({ name })
       return `footer-${name}`
     }
   }

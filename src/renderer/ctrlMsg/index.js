@@ -145,7 +145,7 @@ const methods = {
     const { code, data } = body
 
     if (code === 0) {
-      console.log({ data })
+      // console.log({ data })
       // delayedJobs, jobCounts, list
       store.dispatch('setDbConfig', data)
     }
@@ -155,7 +155,7 @@ const methods = {
     const { code, message, data } = body
 
     if (code === 0) {
-      console.log({ data })
+      // console.log({ data })
     } else {
       Notification.error({
         position: 'bottom-left',
@@ -169,7 +169,7 @@ const methods = {
     const { code, data } = body
 
     if (code === 0) {
-      console.log({ data })
+      // console.log({ data })
     }
   },
 
@@ -177,25 +177,25 @@ const methods = {
     const { code, data } = body
 
     if (code === 0) {
-      console.log({ data })
+      // console.log({ data })
     }
   },
 
-  createRetainClient({ body, req }) {
-    console.log('ctrlMsg createRetainClient', { body, req  })
-  },
+  // createRetainClient({ body, req }) {
+  //   console.log('ctrlMsg createRetainClient', { body, req  })
+  // },
 
-  removeRetainClient({ body, req }) {
-    console.log('ctrlMsg removeRetainClient', { body, req  })
-  },
+  // removeRetainClient({ body, req }) {
+  //   console.log('ctrlMsg removeRetainClient', { body, req  })
+  // },
 
-  createAcceptClient({ body, req }) {
-    console.log('ctrlMsg createAcceptClient', { body, req  })
-  },
+  // createAcceptClient({ body, req }) {
+  //   console.log('ctrlMsg createAcceptClient', { body, req  })
+  // },
 
-  removeAcceptClient({ body, req }) {
-    console.log('ctrlMsg removeAcceptClient', { body, req  })
-  },
+  // removeAcceptClient({ body, req }) {
+  //   console.log('ctrlMsg removeAcceptClient', { body, req  })
+  // },
 
   mainSendMqtt ({ topic, payload }) {
     store.dispatch('pushToRetainMsgs', {
@@ -232,9 +232,9 @@ const methods = {
     store.dispatch('setTestloading', false)
   },
 
-  closeTesting({ body, req }) {
-    console.log('ctrlMsg closeTesting', { body, req  })
-  },
+  // closeTesting({ body, req }) {
+  //   console.log('ctrlMsg closeTesting', { body, req  })
+  // },
 
   saveExcel({ type, filePath }) {
     // console.log({ type, filePath })
@@ -310,8 +310,8 @@ const ctrlMsg = msg => {
   try {
     methods[msg.key](msg)
   } catch (error) {
-    console.log('---- ctrlMsg error')
-    console.log(error)
+    // console.error('---- ctrlMsg error')
+    console.error(error)
   }
 }
 

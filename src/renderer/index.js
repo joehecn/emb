@@ -1,4 +1,5 @@
 
+import moment from 'moment'
 // 引入 ECharts 主模块
 // 引入折线图
 // 引入提示框和标题组件等
@@ -24,6 +25,7 @@ import { version } from '../../package.json'
 import github from './github.js'
 
 Vue.prototype.$$ipc = ipc
+Vue.prototype.$$moment = moment
 Vue.prototype.$$echarts = echarts
 
 /**

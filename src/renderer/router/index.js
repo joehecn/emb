@@ -52,6 +52,12 @@ const routes = [
     name: 'import',
     component: () => import('../views/Import.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/tasklist/:organize',
+    name: 'tasklist',
+    component: () => import('../views/TaskList.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 

@@ -149,7 +149,10 @@
                 <el-table-column
                   label="outField">
                   <template slot-scope="scope">
-                    <el-input :value="scope.row.outField" @input="value => updateFiled(tableType.table, scope.row.inField, value, index, scope.$index, 'outField')"></el-input>
+                    <el-input
+                      :value="scope.row.outField"
+                      @input="value => updateFiled(tableType.table, scope.row.inField, value, index, scope.$index, 'outField')">
+                    </el-input>
                   </template>
                 </el-table-column>
                 
@@ -175,7 +178,20 @@
                 <el-table-column
                   label="unit">
                   <template slot-scope="scope">
-                    <el-input :value="scope.row.unit" @input="value => updateFiled(tableType.table, scope.row.inField, value, index, scope.$index, 'unit')"></el-input>
+                    <el-input
+                      :value="scope.row.unit"
+                      @input="value => updateFiled(tableType.table, scope.row.inField, value, index, scope.$index, 'unit')">
+                    </el-input>
+                  </template>
+                </el-table-column>
+
+                <el-table-column
+                  label="computeProcess">
+                  <template slot-scope="scope">
+                    <el-switch
+                      :value="scope.row.computeProcess"
+                      @change="value => updateFiled(tableType.table, scope.row.inField, value, index, scope.$index, 'computeProcess')">
+                    </el-switch>
                   </template>
                 </el-table-column>
               </el-table>
@@ -211,6 +227,15 @@
           <el-table-column
             prop="unit"
             label="unit">
+          </el-table-column>
+          <el-table-column
+            label="computeProcess">
+            <template slot-scope="scope">
+              <el-switch
+                v-model="scope.row.computeProcess"
+                disabled>
+              </el-switch>
+            </template>
           </el-table-column>
         </el-table>
       </div>
@@ -396,7 +421,7 @@ export default {
   mounted () {
     const id = this.$route.params.id
     const config = this.initConfig(id)
-    console.log({ id, config })
+    // console.log({ id, config })
     const organize = this.$route.params.organize
     this.initDataFromConfig(config, organize)
   },
@@ -412,7 +437,7 @@ export default {
       const config = {
         // Step 1
         name: '',
-        cron: '0 2 1 * *',
+        cron: '0 18 1 * *', // 每月1号2:00
         // Step 2
         type: 'mysql',
         host: '',
@@ -490,7 +515,7 @@ export default {
       if (id !== 'add') {
         for (let i = 0, len = this.dbConfigList.length; i < len; i++) {
           const item = this.dbConfigList[i]
-          console.log(item)
+          // console.log(item)
           if (id === item._id) return item
         }
       }
@@ -535,10 +560,10 @@ export default {
     },
 
     initSelectTables (tables) {
-      console.log({ tables })
+      // console.log({ tables })
       this.tables = tables
       const intersect = this.selectTables.filter(item => tables.includes(item))
-      console.log({ intersect })
+      // console.log({ intersect })
       this.selectTables = intersect
     },
     async nextStep () {
@@ -645,7 +670,7 @@ export default {
         }
       }
       const res = await this.$$ipc.sendPromise(msg)
-      console.log({ res })
+      // console.log({ res })
 
       if (res.body.code === 0) {
           // 成功
@@ -725,12 +750,14 @@ export default {
           name: inField,
           standard: outField,
           schemaName: outType,
-          unit
+          unit,
+          computeProcess
         } = fields[i]
 
         this.insertToMarkObj(table, inField, 'outField', outField)
         this.insertToMarkObj(table, inField, 'outType', outType)
         this.insertToMarkObj(table, inField, 'unit', unit)
+        this.insertToMarkObj(table, inField, 'computeProcess', computeProcess)
       }
     },
     initMarkObj (tables) {
@@ -749,6 +776,8 @@ export default {
       // console.log({ table, inField, value, index, rowIndex, field })
       this.updateHeaders({ value, index, rowIndex, field })
       this.insertToMarkObj(table, inField, field, value)
+      // console.log(this.headers)
+      // console.log(this.markObj)
     },
 
     getImportItem (index) {
@@ -757,7 +786,7 @@ export default {
       const headerItem = this.headers[index]
       let timeInField = ''
       for (let i = 0, len = headerItem.length; i < len; i++) {
-        const { inField, outField, outType, unit } = headerItem[i]
+        const { inField, outField, outType, unit, computeProcess } = headerItem[i]
         if (outType) {
           if (outType === 'time') {
             timeInField = inField
@@ -766,7 +795,8 @@ export default {
               inField,
               outField,
               outType,
-              unit
+              unit,
+              computeProcess
             })
           }
         }
@@ -780,14 +810,15 @@ export default {
         if (resTable.length > 0) {
           const item = resTable[0]
           for (let i = 0, len = filterItem.length; i < len; i++) {
-            const { inField, outField, outType, unit } = filterItem[i]
+            const { inField, outField, outType, unit, computeProcess } = filterItem[i]
             importItem.push({
               table,
               inField,
               time: item[timeInField],
               name: outField,
               value: item[inField],
-              unit
+              unit,
+              computeProcess
             })
           }
         }
@@ -817,13 +848,14 @@ export default {
           inType,
           outField: standard,
           outType: schemaName,
-          unit
+          unit,
+          computeProcess
         } = headerItem[i]
 
         if (schemaName) {
           if (schemaName === 'time') {
             timeInField = {
-              name, inType, standard, schemaName, unit, computeProcess: true
+              name, inType, standard, schemaName, unit, computeProcess
             }
           } else {
             filterItem.push({
@@ -832,7 +864,7 @@ export default {
               standard,
               schemaName,
               unit,
-              computeProcess: true
+              computeProcess
             })
           }
         }
@@ -887,7 +919,7 @@ export default {
           res = await this.postDbConfigUpdate(db, config)
         }
 
-        console.log({ res })
+        // console.log({ res })
         this.saveIsLoading = false
 
         if (res.body.code === 0) {

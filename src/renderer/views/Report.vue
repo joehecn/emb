@@ -341,7 +341,7 @@ export default {
           type: this.getType()
         }
       }
-      console.log(JSON.stringify(msg, null, 2))
+      // console.log(JSON.stringify(msg, null, 2))
       this.$$ipc.send(msg)
     },
 

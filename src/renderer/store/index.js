@@ -119,11 +119,13 @@ const store = new Vuex.Store({
         let outField = inField
         let outType = ''
         let unit = ' '
+        let computeProcess = false
         
         if (mark[inField]) {
           if (mark[inField].outField) outField = mark[inField].outField
           if (mark[inField].outType) outType = mark[inField].outType
           if (mark[inField].unit) unit = mark[inField].unit
+          if (mark[inField].computeProcess) computeProcess = mark[inField].computeProcess
         }
 
         return {
@@ -131,7 +133,8 @@ const store = new Vuex.Store({
           inType,
           outField,
           outType,
-          unit
+          unit,
+          computeProcess
         }
       })
       state.headers.splice(index, 1, newHeader)
@@ -271,7 +274,8 @@ const store = new Vuex.Store({
         { key: '0 18 */15 * *', value: 'At 02:00 AM, every 15 days' },
         { key: '0 18 */10 * *', value: 'At 02:00 AM, every 10 days' },
         { key: '0 18 */5 * *', value: 'At 02:00 AM, every 5 days' },
-        { key: '0 18 * * *', value: 'At 02:00 AM' }
+        { key: '0 18 * * *', value: 'At 02:00 AM' },
+        { key: '0 * * * *', value: 'Every hour' }
         // { key: '40 0 * * *', value: 'At 08:30 AM for test' }
       ]
     }

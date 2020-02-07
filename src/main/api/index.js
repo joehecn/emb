@@ -127,7 +127,7 @@ const api = {
       }
     })
 
-    console.log(JSON.stringify(res.data, null, 2))
+    // console.log(JSON.stringify(res.data, null, 2))
     return res.data
   },
   async sFindHeaders({ token, db, arg }) {
@@ -140,7 +140,7 @@ const api = {
       }
     })
 
-    console.log(JSON.stringify(res.data, null, 2))
+    // console.log(JSON.stringify(res.data, null, 2))
     return res.data
   },
   async sDbConfigList({ token, db }) {
@@ -153,7 +153,7 @@ const api = {
       }
     })
 
-    console.log(JSON.stringify(res.data, null, 2))
+    // console.log(JSON.stringify(res.data, null, 2))
     return res.data
   },
 
@@ -168,7 +168,7 @@ const api = {
       }
     })
 
-    console.log(JSON.stringify(res.data, null, 2))
+    // console.log(JSON.stringify(res.data, null, 2))
     return res.data
     // } catch (error) {
     //   console.log(error)
@@ -185,7 +185,7 @@ const api = {
       }
     })
 
-    console.log(JSON.stringify(res.data, null, 2))
+    // console.log(JSON.stringify(res.data, null, 2))
     return res.data
   },
 
@@ -199,7 +199,7 @@ const api = {
       }
     })
 
-    console.log(JSON.stringify(res.data, null, 2))
+    // console.log(JSON.stringify(res.data, null, 2))
     return res.data
   }
 }

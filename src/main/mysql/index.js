@@ -79,7 +79,7 @@ const findHeaders = async (conn, tableName) => {
   const query = `SHOW COLUMNS FROM ${tableName}`
 
   const { results } = await find(conn, query)
-  console.log(results)
+  // console.log(results)
 
   return results.map(({
     Field: inField,

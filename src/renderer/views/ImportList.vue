@@ -3,7 +3,7 @@
     <div class="btns">
       <el-button
         class="start-btn"
-        :disabled="true"
+        :disabled="organize === ''"
         @click="goTasks">View Tasks</el-button>
 
       <el-select
@@ -164,7 +164,7 @@ export default {
         }
 
         const res = await this.$$ipc.sendPromise(msg)
-        console.log({ res })
+        // console.log({ res })
 
         if (res.body.code === 0) {
           // 删除 res.body.data._id
@@ -180,7 +180,7 @@ export default {
     },
 
     goTasks () {
-      console.log('goTasks')
+      this.$router.push(`/tasklist/${this.organize}`)
     }
   }
 }
