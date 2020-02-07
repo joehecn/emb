@@ -30,12 +30,12 @@ const find = async (conn, query) => {
   let connection = null
   try {
     const connection = await mysql.createConnection(conn)
-    connection.on('error', function() {
+    
+    connection.on('error', () => {
       connection.end()
     })
   
     connection.connect()
-  
 
     const [results, fields] = await connection.query(query)
   

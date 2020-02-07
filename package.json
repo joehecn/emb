@@ -27,7 +27,6 @@
     "element-ui": "^2.13.0",
     "moment": "^2.24.0",
     "mqtt": "^3.0.0",
-    "mysql2": "^2.0.1",
     "shebang-loader": "^0.0.1",
     "vue": "^2.6.10",
     "vue-loader": "^15.7.2",

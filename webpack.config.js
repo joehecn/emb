@@ -1,7 +1,20 @@
 
+// const TerserPlugin = require('terser-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
+  // mode: 'development',
+  // devtool: 'eval',
+  // optimization: {
+  //   minimizer: [
+  //     new TerserPlugin({
+  //       sourceMap: true,
+  //       terserOptions: {
+  //         keep_fnames: true
+  //       }
+  //     })
+  //   ]
+  // },
   output: {
     globalObject: 'this'
   },

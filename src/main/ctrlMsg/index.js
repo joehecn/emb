@@ -40,15 +40,29 @@ const methods = {
     msg.body = data
   },
 
-  async tablelist (msg, _) {
+  // async tablelist (msg, _) {
+  //   const { req } = msg
+  //   const data = await api.sTablelist(req)
+  //   msg.body = data
+  // },
+
+  // async headerlist (msg, _) {
+  //   const { req } = msg
+  //   const data = await api.sHeaderlist(req)
+  //   msg.body = data
+  // },
+
+  async findTables (msg, _) {
+    console.log({ msg })
     const { req } = msg
-    const data = await api.sTablelist(req)
+    const data = await api.sFindTables(req)
     msg.body = data
   },
 
-  async headerlist (msg, _) {
+  async findHeaders (msg, _) {
+    console.log({ msg })
     const { req } = msg
-    const data = await api.sHeaderlist(req)
+    const data = await api.sFindHeaders(req)
     msg.body = data
   },
 

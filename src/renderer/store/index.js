@@ -262,6 +262,18 @@ const store = new Vuex.Store({
       }
 
       return { arr, obj }
+    },
+
+    getCronOption: () => {
+      // TODO: 暂时写死 东八区，以后考虑时区
+      return [
+        { key: '0 18 1 * *', value: 'At 02:00 AM, on day 1 of the month' },
+        { key: '0 18 */15 * *', value: 'At 02:00 AM, every 15 days' },
+        { key: '0 18 */10 * *', value: 'At 02:00 AM, every 10 days' },
+        { key: '0 18 */5 * *', value: 'At 02:00 AM, every 5 days' },
+        { key: '0 18 * * *', value: 'At 02:00 AM' }
+        // { key: '40 0 * * *', value: 'At 08:30 AM for test' }
+      ]
     }
   }
 })

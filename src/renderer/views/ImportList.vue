@@ -47,8 +47,21 @@
         </el-table-column>
 
         <el-table-column
-          prop="cron"
-          label="cron">
+          label="cron"
+          width="320">
+          <template slot-scope="scope">
+            <el-select
+              v-model="scope.row.cron"
+              :disabled="true"
+              style="width: 300px;">
+              <el-option
+                v-for="item in cronOption"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
+          </template>
         </el-table-column>
 
         <el-table-column
@@ -67,7 +80,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -80,6 +93,9 @@ export default {
       organize: state => state.organize,
       organizes: state => state.organizes,
       dbConfigList: state => state.dbConfigList
+    }),
+    ...mapGetters({
+      cronOption: 'getCronOption'
     })
   },
 
@@ -94,7 +110,8 @@ export default {
 
   methods: {
     ...mapActions([
-      'setOrganize'
+      'setOrganize',
+      'removeDbConfigListItem'
     ]),
 
     getOrganizelist () {
@@ -136,12 +153,13 @@ export default {
         type: 'warning'
       }).then(async () => {
         const arg = { _id, cron }
+        // console.log(arg)
         const msg = {
           key: 'dbConfigRemove',
           req: {
             token: this.user.token,
             db: this.organize,
-            arg
+            arg // : { _id: '5e3caea707285b0011675a60', cron: '40 0 * * *' }
           }
         }
 
@@ -150,7 +168,7 @@ export default {
 
         if (res.body.code === 0) {
           // 删除 res.body.data._id
-          
+          this.removeDbConfigListItem(res.body.data._id)
         } else {
           this.$notify.error({
             title: 'Error',

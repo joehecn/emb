@@ -249,19 +249,19 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   data () {
     return {
       active: 0,
-      cronOption: [
-        { key: '0 2 1 * *', value: 'At 02:00 AM, on day 1 of the month' },
-        { key: '0 2 */15 * *', value: 'At 02:00 AM, every 15 days' },
-        { key: '0 2 */10 * *', value: 'At 02:00 AM, every 10 days' },
-        { key: '0 2 */5 * *', value: 'At 02:00 AM, every 5 days' },
-        { key: '0 2 * * *', value: 'At 02:00 AM' }
-      ],
+      // cronOption: [
+      //   { key: '0 2 1 * *', value: 'At 02:00 AM, on day 1 of the month' },
+      //   { key: '0 2 */15 * *', value: 'At 02:00 AM, every 15 days' },
+      //   { key: '0 2 */10 * *', value: 'At 02:00 AM, every 10 days' },
+      //   { key: '0 2 */5 * *', value: 'At 02:00 AM, every 5 days' },
+      //   { key: '0 2 * * *', value: 'At 02:00 AM' }
+      // ],
       // intervalOption: [
       //   { key: 60, value: '1 Hour' },
       //   { key: 30, value: '30 Minutes' },
@@ -373,6 +373,9 @@ export default {
       resTables: state => state.resTables,
       resHeaderNames: state => state.resHeaderNames,
       dbConfigList: state => state.dbConfigList
+    }),
+    ...mapGetters({
+      cronOption: 'getCronOption'
     })
   },
 
@@ -401,7 +404,8 @@ export default {
   methods: {
     ...mapActions([
       'initHeaders',
-      'updateHeaders'
+      'updateHeaders',
+      'setHeaders'
     ]),
 
     initConfig (id) {
@@ -633,13 +637,15 @@ export default {
     async getTablelist () {
       // 查找数据表
       const msg = {
-        key: 'tablelist',
+        key: 'findTables',
         req: {
           token: this.user.token,
-          connForm: this.connForm
+          db: this.nomalForm.organize,
+          arg: { config: this.connForm }
         }
       }
       const res = await this.$$ipc.sendPromise(msg)
+      console.log({ res })
 
       if (res.body.code === 0) {
           // 成功
@@ -660,28 +666,31 @@ export default {
       this.tableTypes = tableTypes
     },
 
-    getAllHeaders (len) {
+    async getAllHeaders (len) {
       for (let i = 0; i < len; i++) {
         const table = this.selectTables[i]
         const mark = this.markObj[table] || {}
 
-        this.getHeaderlist(table, i, mark)
+        const res = await this.getHeaderlist(table)
+
+        if (res.body.code === 0) {
+          this.setHeaders({ data: res.body.data, index: i, mark })
+        }
       }
     },
  
-    getHeaderlist (table, index, mark) {
+    async getHeaderlist (table) {
       // 查找表头
       const msg = {
-        key: 'headerlist',
+        key: 'findHeaders',
         req: {
           token: this.user.token,
-          connForm: this.connForm,
-          table,
-          index,
-          mark
+          db: this.nomalForm.organize,
+          arg: { config: this.connForm, tableName: table }
         }
       }
-      this.$$ipc.send(msg)
+      const res = await this.$$ipc.sendPromise(msg)
+      return res
     },
 
     outTypeVisibleChange (value, index) {
@@ -878,6 +887,7 @@ export default {
           res = await this.postDbConfigUpdate(db, config)
         }
 
+        console.log({ res })
         this.saveIsLoading = false
 
         if (res.body.code === 0) {
