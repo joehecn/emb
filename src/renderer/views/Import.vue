@@ -84,6 +84,17 @@
           <el-form-item label="database" prop="database">
             <el-input v-model="connForm.database" placeholder="please input database"></el-input>
           </el-form-item>
+
+          <el-form-item label="timeZone" prop="timeZone">
+            <el-select v-model="connForm.timeZone" placeholder="please select timeZone">
+              <el-option
+                v-for="item in timeZoneOption"
+                :key="item.key"
+                :label="item.value"
+                :value="item.key">
+              </el-option>
+            </el-select>
+          </el-form-item>
           
           <el-form-item>
             <el-button @click="submitForm('connForm')">Testing Connection ...</el-button>
@@ -280,6 +291,11 @@ export default {
   data () {
     return {
       active: 0,
+      timeZoneOption: [
+        { key: 'Hongkong', value: 'Hongkong' },
+        { key: 'Asia/Shanghai', value: 'Asia/Shanghai' },
+        { key: 'Asia/Kolkata', value: 'Asia/Kolkata' }
+      ],
       // cronOption: [
       //   { key: '0 2 1 * *', value: 'At 02:00 AM, on day 1 of the month' },
       //   { key: '0 2 */15 * *', value: 'At 02:00 AM, every 15 days' },
@@ -339,7 +355,8 @@ export default {
         port: '', // 3306
         user: '', // root
         password: '', // haeco
-        database: '' // haeco
+        database: '', // haeco
+        timeZone: 'Hongkong'
       },
       tables: [],
       selectTables: [],
@@ -445,6 +462,7 @@ export default {
         user: '',
         password: '',
         database: '',
+        timeZone: 'Hongkong',
         // Step 3 选 tables->name
         tables: [
           // {
@@ -535,6 +553,7 @@ export default {
       this.connForm.user = config.user
       this.connForm.password = config.password
       this.connForm.database = config.database
+      this.connForm.timeZone = config.timeZone || 'Hongkong'
       // step 3
       const { tables } = config
       this.selectTables = tables.map(({ name }) => name)
@@ -891,6 +910,7 @@ export default {
       config.user = this.connForm.user
       config.password = this.connForm.password
       config.database = this.connForm.database
+      config.timeZone = this.connForm.timeZone
 
       const tables = []
       for (let i = 0, len = this.tableTypes.length; i < len; i++) {

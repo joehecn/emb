@@ -159,7 +159,8 @@ export default {
           req: {
             token: this.user.token,
             db: this.organize,
-            arg // : { _id: '5e3caea707285b0011675a60', cron: '40 0 * * *' }
+            arg
+            // arg : { _id: '5e3d7c616dffb200114753ee', cron: '0 18 1 * *' }
           }
         }
 
