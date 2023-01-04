@@ -23,7 +23,7 @@
     "echarts": "^4.4.0",
     "electron": "^7.1.11",
     "electron-builder": "^22.1.0",
-    "electron-webpack": "^2.7.4",
+    "electron-webpack": "^2.8.2",
     "element-ui": "^2.13.0",
     "moment": "^2.24.0",
     "mqtt": "^3.0.0",
